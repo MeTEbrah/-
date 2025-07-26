@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تست روانشناسی عاشقانه فوق تخصصی | نسخه پیشرفته</title>
+    <link href="https://cdn.fontcdn.ir/Font/Persian/IRANSans/IRANSans.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00bfff;
+            --secondary-color: #0066ff;
+            --accent-color: #00ffcc;
+            --text-color: #00ffff;
+            --dark-bg: #000;
+            --darker-bg: #111;
+            --darkest-bg: #222;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            font-family: 'IRANSans', sans-serif;
+            padding: 20px;
+            line-height: 1.8;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            text-shadow: 0 0 10px var(--secondary-color);
+            margin-bottom: 30px;
+            font-size: 28px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 180, 255, 0.3);
+        }
+        
+        .intro {
+            background-color: var(--darker-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-right: 4px solid var(--secondary-color);
+            box-shadow: 0 0 15px rgba(0, 150, 255, 0.2);
+        }
+        
+        .question-container {
+            background-color: var(--darker-bg);
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            border-right: 4px solid var(--secondary-color);
+            box-shadow: 0 0 15px rgba(0, 150, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .question-container:hover {
+            box-shadow: 0 0 20px rgba(0, 180, 255, 0.4);
+        }
+        
+        .question {
+            color: var(--primary-color);
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .options {
+            margin-right: 20px;
+        }
+        
+        .option {
+            margin-bottom: 12px;
+            padding: 12px;
+            background-color: var(--darkest-bg);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-right: 35px;
+        }
+        
+        .option:hover {
+            background-color: #333;
+            box-shadow: 0 0 8px rgba(0, 180, 255, 0.4);
+            transform: translateX(-5px);
+        }
+        
+        .option input {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        button {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            color: #000;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'IRANSans', sans-serif;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 150, 255, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        button.secondary {
+            background: linear-gradient(135deg, #333 0%, #555 100%);
+            color: var(--text-color);
+        }
+        
+        .result {
+            background-color: var(--darker-bg);
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            margin-top: 30px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-title {
+            color: var(--accent-color);
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 0 0 8px #00ff99;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 255, 204, 0.3);
+        }
+        
+        .result-content {
+            line-height: 2;
+        }
+        
+        .result-section {
+            margin-bottom: 25px;
+        }
+        
+        .result-section h3 {
+            color: var(--primary-color);
+            font-size: 20px;
+            margin-bottom: 10px;
+            border-right: 3px solid var(--secondary-color);
+            padding-right: 10px;
+        }
+        
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: var(--darkest-bg);
+            border-radius: 5px;
+            margin-bottom: 30px;
+            height: 12px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .score-display {
+            text-align: center;
+            font-size: 18px;
+            margin: 20px 0;
+            color: var(--accent-color);
+        }
+        
+        .warning {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .recommendation {
+            background-color: rgba(0, 180, 255, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-right: 3px solid var(--primary-color);
+        }
+        
+        .scientific-ref {
+            font-size: 14px;
+            color: #888;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+        }
+        
+        .credits {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 180, 255, 0.3);
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .dimension-chart {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        
+        .dimension-chart th, .dimension-chart td {
+            padding: 10px;
+            text-align: right;
+            border: 1px solid #333;
+        }
+        
+        .dimension-chart th {
+            background-color: var(--darkest-bg);
+            color: var(--primary-color);
+        }
+        
+        .dimension-chart tr:nth-child(even) {
+            background-color: var(--darker-bg);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .badge-green {
+            background-color: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+        }
+        
+        .badge-yellow {
+            background-color: rgba(255, 255, 0, 0.1);
+            color: #ffff00;
+        }
+        
+        .badge-red {
+            background-color: rgba(255, 0, 0, 0.1);
+            color: #ff6666;
+        }
+        
+        .intro-section {
+            margin-bottom: 25px;
+        }
+        
+        .intro-section h2 {
+            color: var(--accent-color);
+            font-size: 22px;
+            margin-bottom: 15px;
+            border-right: 3px solid var(--accent-color);
+            padding-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تست روانشناسی عاشقانه فوق تخصصی</h1>
+        
+        <div class="intro">
+            <div class="intro-section">
+                <h2>اهمیت شناخت سبک دلبستگی</h2>
+                <p>سبک دلبستگی شما که در کودکی شکل گرفته است، تعیین‌کننده اصلی الگوهای رفتاری شما در روابط عاطفی است. این تست بر اساس نظریه دلبستگی جان بالبی و مری اینزورث طراحی شده است که نشان می‌دهد چگونه تجربیات اولیه با مراقبان اصلی، بر روابط بزرگسالی ما تأثیر می‌گذارد.</p>
+            </div>
+            
+            <div class="intro-section">
+                <h2>چگونه از این تست استفاده کنیم؟</h2>
+                <ul>
+                    <li>به تمام سوالات با دقت و صداقت پاسخ دهید</li>
+                    <li>اولین پاسخی که به ذهنتان می‌رسد معمولاً دقیق‌ترین است</li>
+                    <li>پس از دریافت نتایج، بخش‌های نیازمند بهبود را شناسایی کنید</li>
+                    <li>از راهکارهای پیشنهادی برای ارتقای کیفیت روابط خود استفاده کنید</li>
+                </ul>
+            </div>
+            
+            <div class="intro-section">
+                <h2>اعتبار علمی تست</h2>
+                <p>این آزمون بر اساس معتبرترین نظریه‌های روانشناسی رابطه‌ای شامل نظریه دلبستگی (باولبی و اینزورث)، مدل سه بخشی عشق استرنبرگ، و نظریه سیستم‌های خانواده بوون طراحی شده است. سوالات با توجه به آخرین پژوهش‌های حوزه روانشناسی روابط بین‌فردی تنظیم شده‌اند.</p>
+            </div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div id="testContainer">
+            <!-- سوالات به صورت دینامیک در اینجا نمایش داده می‌شوند -->
+        </div>
+        
+        <div class="buttons">
+            <button id="submitBtn" onclick="calculateResult()">محاسبه نتیجه</button>
+            <button class="secondary" onclick="resetTest()">شروع مجدد تست</button>
+        </div>
+        
+        <div class="result" id="resultContainer">
+            <div class="result-title">تحلیل تخصصی نتایج تست روانشناسی عاشقانه</div>
+            <div class="score-display" id="scoreDisplay"></div>
+            <div class="result-content" id="resultContent"></div>
+            <div class="scientific-ref">
+                <p>منابع علمی: نظریه دلبستگی (باولبی و اینزورث)، مدل سه بخشی عشق استرنبرگ، نظریه سیستم‌های خانواده (بوون)، نظریه تمایزیافتگی (موری بوون)</p>
+            </div>
+        </div>
+        
+        <div class="credits">
+            <p>طراحی و توسعه: <span style="color: var(--accent-color);">مهندس مهدی میرابراهیمی</span> | متخصص روانشناسی رابطه‌ای</p>
+            <p>© 2023 مرکز تخصصی ارزیابی و بهبود روابط عاطفی</p>
+        </div>
+    </div>
+
+    <script>
+        // سوالات تست با پایه علمی قوی
+        const questions = [
+            {
+                question: "1. وقتی شریک عاطفی شما با فرد دیگری تعامل گرمی دارد، معمولاً چه واکنش هیجانی و رفتاری نشان می‌دهید؟ (بر اساس نظریه حسادت رومانتیک)",
+                options: [
+                    "الف) احساس امنیت می‌کنم و این تعامل را طبیعی می‌دانم (واکنش ایمن)",
+                    "ب) کمی ناراحت می‌شوم اما رفتارم را کنترل می‌کنم (واکنش اضطرابی متوسط)",
+                    "ج) دچار اضطراب شدید می‌شوم و ممکن است رفتارهای بررسی‌گرانه نشان دهم (واکنش اضطرابی شدید)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "اضطراب دلبستگی"
+            },
+            {
+                question: "2. در مواجهه با تعارض در رابطه، معمولاً چه سبک حل تعارضی دارید؟ (بر اساس مدل گاتمن)",
+                options: [
+                    "الف) به دنبال حل مسئله به شیوه‌ای مشارکتی هستم (سبک سازنده)",
+                    "ب) سعی می‌کنم از بحث اجتناب کنم تا آرامش حفظ شود (سبک اجتنابی)",
+                    "ج) ممکن است پرخاشگری کلامی نشان دهم یا کاملاً سکوت کنم (سبک مخرب)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "مهارت حل تعارض"
+            },
+            {
+                question: "3. سبک دلبستگی شما در روابط عاطفی بیشتر شبیه کدام گزینه است؟ (بر اساس نظریه دلبستگی اینزورث)",
+                options: [
+                    "الف) راحت به دیگران نزدیک می‌شوم و به آنها اعتماد می‌کنم (دلبستگی ایمن)",
+                    "ب) گاهی نگران طرد شدن هستم اما می‌توانم روابط پایدار داشته باشم (دلبستگی اضطرابی-اجتنابی)",
+                    "ج) یا بیش از حد وابسته می‌شوم یا کاملاً از صمیمیت اجتناب می‌کنم (دلبستگی آشفته)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "سبک دلبستگی"
+            },
+            {
+                question: "4. چگونه عشق خود را به شریک عاطفی‌تان ابراز می‌کنید؟ (بر اساس نظیه عشق سه‌بخشی استرنبرگ)",
+                options: [
+                    "الف) هم از طریق کلمات و هم اعمال محبت‌آمیز به صورت متعادل (تعادل در صمیمیت، شور و تعهد)",
+                    "ب) بیشتر از طریق اعمال و خدمات محبت‌آمیز (توجه به مؤلفه تعهد)",
+                    "ج) معمولاً در بیان عواطف مشکل دارم یا بیش از حد ابراز احساسات می‌کنم (عدم تعادل در مؤلفه‌ها)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "بیان عشق"
+            },
+            {
+                question: "5. وقتی شریک عاطفی‌تان نیاز به فضای شخصی دارد، چگونه واکنش نشان می‌دهید؟ (بر اساس نظریه تمایزیافتگی بوون)",
+                options: [
+                    "الف) کاملاً درک می‌کنم و به حریم شخصی احترام می‌گذارم (تمایزیافتگی بالا)",
+                    "ب) کمی نگران می‌شوم اما سعی می‌کنم پذیرا باشم (تمایزیافتگی متوسط)",
+                    "ج) احساس طرد شدن می‌کنم و ممکن است اصرار کنم بیشتر با هم باشیم (تمایزیافتگی پایین)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "تمایزیافتگی"
+            },
+            {
+                question: "6. در تصمیم‌گیری‌های مهم زندگی مشترک، معمولاً چه رویکردی دارید؟ (بر اساس نظریه سیستم‌های خانواده)",
+                options: [
+                    "الف) به دنبال توافق و تصمیم‌گیری مشارکتی هستیم (سیستم سالم)",
+                    "ب) معمولاً یکی از ما نقش اصلی را در تصمیم‌گیری دارد (عدم تعادل قدرت)",
+                    "ج) اغلب در این موارد اختلاف نظر جدی داریم (تعارض ساختاری)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "تصمیم‌گیری مشترک"
+            },
+            {
+                question: "7. چگونه با تفاوت‌های فردی بین خود و شریک عاطفی‌تان کنار می‌آیید؟ (بر اساس نظریه سازگاری زناشویی)",
+                options: [
+                    "الف) تفاوت‌ها را جذاب می‌دانم و به دنبال تعادل هستم (سازگاری بالا)",
+                    "ب) سعی می‌کنم خودم را با طرف مقابل تطبیق دهم (انطباق یک‌جانبه)",
+                    "ج) معمولاً انتظار دارم طرف مقابل تغییر کند (عدم پذیرش تفاوت‌ها)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "سازگاری رابطه‌ای"
+            },
+            {
+                question: "8. در مورد نقاط ضعف شریک عاطفی‌تان چه احساسی دارید؟ (بر اساس نظریه پذیرش بدون قید و شرط)",
+                options: [
+                    "الف) می‌پذیرم که هیچکس کامل نیست و روی رشد متقابل کار می‌کنیم (پذیرش سالم)",
+                    "ب) سعی می‌کنم به آنها کمک کنم بهبود یابند (تمایل به تغییر دیگری)",
+                    "ج) ممکن است مدام آنها را به خاطر نقاط ضعفشان سرزنش کنم (عدم پذیرش)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "پذیرش شریک"
+            },
+            {
+                question: "9. وقتی شریک عاطفی‌تان موفقیتی کسب می‌کند، چه احساسی دارید؟ (بر اساس مفهوم هم‌رشدی)",
+                options: [
+                    "الف) искренا خوشحال می‌شوم و به او افتخار می‌کنم (هم‌رشدی سالم)",
+                    "ب) خوشحال می‌شوم اما گاهی مقایسه ناخودآگاه انجام می‌دهم (رقابت پنهان)",
+                    "ج) ممکن است احساس رقابت یا کم‌بودی کنم (احساس تهدید)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "هم‌رشدی"
+            },
+            {
+                question: "10. چگونه با انتقاد شریک عاطفی‌تان برخورد می‌کنید؟ (بر اساس نظریه ارتباطات زناشویی)",
+                options: [
+                    "الف) به عنوان فرصتی برای بهبود رابطه می‌بینم (ذهنیت رشد)",
+                    "ب) سعی می‌کنم پذیرا باشم اما گاهی دفاعی می‌شوم (واکنش ترکیبی)",
+                    "ج) معمولاً واکنش شدید نشان می‌دهم یا کاملاً کناره می‌گیرم (واکنش دفاعی)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "پذیرش انتقاد"
+            },
+            {
+                question: "11. در مورد آینده رابطه خود چه دیدگاهی دارید؟ (بر اساس نظریه خوش‌بینی آموخته‌شده)",
+                options: [
+                    "الف) خوشبین هستم و برای رشد رابطه برنامه دارم (خوش‌بینی واقع‌گرایانه)",
+                    "ب) گاهی نگران می‌شوم اما به طور کلی مثبت نگاه می‌کنم (دیدگاه ترکیبی)",
+                    "ج) اغلب نگرانم یا اصلاً به آینده فکر نمی‌کنم (بدبینی یا اجتناب)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "دیدگاه به آینده رابطه"
+            },
+            {
+                question: "12. چگونه با استرس‌های خارجی که بر رابطه تأثیر می‌گذارند کنار می‌آیید؟ (بر اساس مدل ABC-X خانواده)",
+                options: [
+                    "الف) با هم همکاری می‌کنیم تا از پس چالش‌ها برآییم (انطباق مؤثر)",
+                    "ب) سعی می‌کنم بار مسئولیت را به دوش بکشم (انطباق یک‌جانبه)",
+                    "ج) استرس باعث تشدید اختلافات بین ما می‌شود (انطباق نامؤثر)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "مدیریت استرس رابطه‌ای"
+            },
+            {
+                question: "13. در تقسیم مسئولیت‌های زندگی مشترک چگونه عمل می‌کنید؟ (بر اساس نظریه عدالت در روابط)",
+                options: [
+                    "الف) بر اساس توانایی‌ها و زمان‌بندی‌ها تقسیم منصفانه داریم (عدالت رابطه‌ای)",
+                    "ب) گاهی احساس می‌کنم سهم من بیشتر است اما معمولاً می‌پذیرم (عدم تعادل متوسط)",
+                    "ج) اغلب در مورد تقسیم مسئولیت‌ها اختلاف داریم (تعارض ساختاری)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "تقسیم مسئولیت"
+            },
+            {
+                question: "14. چگونه با خانواده و دوستان شریک عاطفی‌تان ارتباط برقرار می‌کنید؟ (بر اساس نظریه مرزهای رابطه)",
+                options: [
+                    "الف) رابطه خوبی دارم و مرزهای سالم را حفظ می‌کنم (مرزهای انعطاف‌پذیر)",
+                    "ب) سعی می‌کنم رابطه خوبی داشته باشم اما گاهی چالش‌برانگیز است (مرزهای نیمه‌قابل نفوذ)",
+                    "ج) معمولاً با آنها مشکل دارم یا اصلاً ارتباطی ندارم (مرزهای سخت یا گسسته)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "مرزهای رابطه"
+            },
+            {
+                question: "15. وقتی نیازهای عاطفی شما برآورده نمی‌شود، چگونه واکنش نشان می‌دهید؟ (بر اساس نظریه دلبستگی بزرگسالان)",
+                options: [
+                    "الف) به شیوه‌ای بالغانه در مورد نیازهایم صحبت می‌کنم (سبک ایمن)",
+                    "ب) گاهی ناراحتم را نشان می‌دهم اما مستقیماً بیان نمی‌کنم (سبک اجتنابی)",
+                    "ج) ممکن است رفتارهای پرخاشگرانه یا منفعل-پرخاشگرانه نشان دهم (سبک آشفته)"
+                ],
+                scores: [1, 2, 3],
+                dimension: "ابراز نیازهای عاطفی"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = [];
+        let totalScore = 0;
+        let dimensionScores = {
+            "اضطراب دلبستگی": 0,
+            "مهارت حل تعارض": 0,
+            "سبک دلبستگی": 0,
+            "بیان عشق": 0,
+            "تمایزیافتگی": 0,
+            "تصمیم‌گیری مشترک": 0,
+            "سازگاری رابطه‌ای": 0,
+            "پذیرش شریک": 0,
+            "هم‌رشدی": 0,
+            "پذیرش انتقاد": 0,
+            "دیدگاه به آینده رابطه": 0,
+            "مدیریت استرس رابطه‌ای": 0,
+            "تقسیم مسئولیت": 0,
+            "مرزهای رابطه": 0,
+            "ابراز نیازهای عاطفی": 0
+        };
+        let dimensionCounts = {
+            "اضطراب دلبستگی": 0,
+            "مهارت حل تعارض": 0,
+            "سبک دلبستگی": 0,
+            "بیان عشق": 0,
+            "تمایزیافتگی": 0,
+            "تصمیم‌گیری مشترک": 0,
+            "سازگاری رابطه‌ای": 0,
+            "پذیرش شریک": 0,
+            "هم‌رشدی": 0,
+            "پذیرش انتقاد": 0,
+            "دیدگاه به آینده رابطه": 0,
+            "مدیریت استرس رابطه‌ای": 0,
+            "تقسیم مسئولیت": 0,
+            "مرزهای رابطه": 0,
+            "ابراز نیازهای عاطفی": 0
+        };
+
+        // نمایش سوالات
+        function displayQuestions() {
+            const testContainer = document.getElementById('testContainer');
+            testContainer.innerHTML = '';
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                
+                const questionText = document.createElement('div');
+                questionText.className = 'question';
+                questionText.textContent = q.question;
+                questionDiv.appendChild(questionText);
+                
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                
+                q.options.forEach((option, i) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = `question${index}`;
+                    radio.value = i;
+                    radio.id = `q${index}o${i}`;
+                    if (answers[index] === i) {
+                        radio.checked = true;
+                    }
+                    radio.addEventListener('change', () => {
+                        answers[index] = i;
+                        updateProgress();
+                    });
+                    
+                    const label = document.createElement('label');
+                    label.htmlFor = `q${index}o${i}`;
+                    label.textContent = option;
+                    
+                    optionDiv.appendChild(radio);
+                    optionDiv.appendChild(label);
+                    optionsDiv.appendChild(optionDiv);
+                });
+                
+                questionDiv.appendChild(optionsDiv);
+                testContainer.appendChild(questionDiv);
+            });
+            
+            updateProgress();
+        }
+
+        // محاسبه نتیجه
+        function calculateResult() {
+            // بررسی آیا همه سوالات پاسخ داده شده‌اند
+            if (answers.length < questions.length || answers.includes(undefined)) {
+                alert("لطفاً به تمام سوالات پاسخ دهید");
+                return;
+            }
+            
+            // محاسبه امتیاز کل و امتیازات ابعاد مختلف
+            totalScore = 0;
+            // Reset dimension scores
+            for (const dim in dimensionScores) {
+                dimensionScores[dim] = 0;
+                dimensionCounts[dim] = 0;
+            }
+            
+            answers.forEach((answer, index) => {
+                const score = questions[index].scores[answer];
+                totalScore += score;
+                
+                const dimension = questions[index].dimension;
+                dimensionScores[dimension] += score;
+                dimensionCounts[dimension]++;
+            });
+            
+            // محاسبه میانگین برای هر بعد
+            for (const dim in dimensionScores) {
+                if (dimensionCounts[dim] > 0) {
+                    dimensionScores[dim] = (dimensionScores[dim] / dimensionCounts[dim]).toFixed(2);
+                }
+            }
+            
+            // نمایش نتیجه
+            showResult();
+        }
+
+        // نمایش نتیجه
+        function showResult() {
+            const resultContainer = document.getElementById('resultContainer');
+            const resultContent = document.getElementById('resultContent');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            
+            scoreDisplay.textContent = `امتیاز کلی شما: ${totalScore} از 45`;
+            
+            let resultText = '';
+            let dimensionAnalysis = '<div class="result-section"><h3>تحلیل ابعاد مختلف:</h3>';
+            
+            // ایجاد جدول تحلیل ابعاد
+            dimensionAnalysis += `
+                <table class="dimension-chart">
+                    <tr>
+                        <th>بعد رابطه‌ای</th>
+                        <th>میانگین امتیاز</th>
+                        <th>وضعیت</th>
+                    </tr>
+            `;
+            
+            // تحلیل ابعاد مختلف
+            for (const dim in dimensionScores) {
+                let dimStatus = '';
+                let dimClass = '';
+                const score = parseFloat(dimensionScores[dim]);
+                
+                if (score <= 1.5) {
+                    dimStatus = 'مطلوب';
+                    dimClass = 'badge-green';
+                } else if (score <= 2.5) {
+                    dimStatus = 'نیاز به بهبود';
+                    dimClass = 'badge-yellow';
+                } else {
+                    dimStatus = 'نیاز به توجه فوری';
+                    dimClass = 'badge-red';
+                }
+                
+                dimensionAnalysis += `
+                    <tr>
+                        <td>${dim}</td>
+                        <td>${score}</td>
+                        <td><span class="badge ${dimClass}">${dimStatus}</span></td>
+                    </tr>
+                `;
+            }
+            
+            dimensionAnalysis += '</table></div>';
+            
+            // تحلیل کلی
+            if (totalScore <= 22) {
+                resultText = `
+                    <div class="result-section">
+                        <h3>سبک دلبستگی ایمن (Secure Attachment)</h3>
+                        <p>تحلیل تخصصی: نتایج نشان می‌دهد شما دارای <span class="highlight">سبک دلبستگی ایمن</span> هستید. این سبک که در حدود 50-60% جمعیت دیده می‌شود، سالم‌ترین الگوی رابطه‌ای محسوب می‌شود.</p>
+                        
+                        <p><strong>ویژگی‌های کلیدی:</strong></p>
+                        <ul>
+                            <li>توانایی ایجاد روابط صمیمی و متعادل</li>
+                            <li>مهارت‌های ارتباطی و حل تعارض توسعه‌یافته</li>
+                            <li>تعادل مناسب بین استقلال و وابستگی</li>
+                            <li>توانایی تنظیم هیجانات در رابطه</li>
+                            <li>دیدگاه واقع‌گرایانه نسبت به روابط عاشقانه</li>
+                        </ul>
+                        
+                        <p><strong>ریشه‌های تحولی:</strong> این سبک معمولاً نتیجه تجربیات کودکی با مراقبانی پاسخگو، در دسترس و حمایت‌گر است که به نیازهای کودک به صورت حساس و مناسب پاسخ می‌دادند.</p>
+                        
+                        <div class="recommendation">
+                            <p><strong>پیشنهادات برای رشد بیشتر:</strong></p>
+                            <ul>
+                                <li>توسعه بیشتر مهارت‌های ارتباطی پیشرفته</li>
+                                <li>آموزش تکنیک‌های حل تعارض پیشرفته</li>
+                                <li>توجه به انتخاب شریک عاطفی با سبک دلبستگی سازگار</li>
+                                <li>توسعه هوش هیجانی رابطه‌ای</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            } else if (totalScore <= 33) {
+                resultText = `
+                    <div class="result-section">
+                        <h3>سبک دلبستگی اضطرابی-اجتنابی (Anxious-Avoidant Attachment)</h3>
+                        <p>تحلیل تخصصی: نتایج نشان می‌دهد شما دارای <span class="highlight">سبک دلبستگی اضطرابی-اجتنابی</span> هستید. این سبک که در حدود 25-30% جمعیت دیده می‌شود، ترکیبی از ویژگی‌های دو سبک ناایمن است.</p>
+                        
+                        <p><strong>ویژگی‌های کلیدی:</strong></p>
+                        <ul>
+                            <li>نوسان بین نیاز به صمیمیت و ترس از آن</li>
+                            <li>مشکل در تنظیم فاصله بهینه در رابطه</li>
+                            <li>واکنش‌های هیجانی شدید به موقعیت‌های رابطه‌ای</li>
+                            <li>ترس همزمان از طرد شدن و محدود شدن</li>
+                            <li>مشکل در حفظ ثبات عاطفی در رابطه</li>
+                        </ul>
+                        
+                        <p><strong>ریشه‌های تحولی:</strong> این سبک اغلب نتیجه تجربیات کودکی با مراقبانی غیرقابل پیش‌بینی است که گاهی پاسخگو و گاهی غایب یا طردکننده بودند.</p>
+                        
+                        <div class="recommendation warning">
+                            <p><strong>چالش‌های بالقوه:</strong> این سبک می‌تواند منجر به روابط پرتنش، چرخه‌های نزدیکی-فاصله‌گیری، و نارضایتی رابطه‌ای شود.</p>
+                        </div>
+                        
+                        <div class="recommendation">
+                            <p><strong>راهکارهای بهبود:</strong></p>
+                            <ul>
+                                <li>روان‌درمانی برای کار بر روی الگوهای دلبستگی</li>
+                                <li>آموزش مهارت‌های تنظیم هیجان</li>
+                                <li>تمرین ارتباط شفاف و صادقانه</li>
+                                <li>توسعه خودآگاهی درباره الگوهای رابطه‌ای</li>
+                                <li>کار بر روی تصویر خود و خودارزشمندی</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            } else {
+                resultText = `
+                    <div class="result-section">
+                        <h3>سبک دلبستگی آشفته (Disorganized Attachment)</h3>
+                        <p>تحلیل تخصصی: نتایج نشان می‌دهد شما دارای <span class="highlight">سبک دلبستگی آشفته</span> هستید. این سبک که در حدود 15-20% جمعیت دیده می‌شود، پیچیده‌ترین و چالش‌برانگیزترین الگوی رابطه‌ای است.</p>
+                        
+                        <p><strong>ویژگی‌های کلیدی:</strong></p>
+                        <ul>
+                            <li>ترکیبی از رفتارهای اضطرابی و اجتنابی شدید</li>
+                            <li>عدم وجود استراتژی سازگارانه برای مدیریت روابط</li>
+                            <li>واکنش‌های هیجانی بسیار شدید و غیرمنطقی</li>
+                            <li>مشکلات جدی در اعتماد و صمیمیت</li>
+                            <li>احتمال تجربه آسیب‌های روانی قبلی</li>
+                        </ul>
+                        
+                        <p><strong>ریشه‌های تحولی:</strong> این سبک اغلب نتیجه تجربیات کودکی با مراقبانی ترسناک، آسیب‌زننده یا کاملاً غایب است که خود منبع ترس و اضطراب برای کودک بودند.</p>
+                        
+                        <div class="recommendation warning">
+                            <p><strong>هشدار تخصصی:</strong> این سبک با مشکلات جدی در روابط عاطفی، خطر بالای خشونت رابطه‌ای، و آسیب‌پذیری نسبت به اختلالات روانی همراه است.</p>
+                        </div>
+                        
+                        <div class="recommendation">
+                            <p><strong>راهکارهای تخصصی:</strong></p>
+                            <ul>
+                                <li>مراجعه فوری به رواندرمانگر متخصص در حوزه دلبستگی</li>
+                                <li>کار بر روی التیام آسیب‌های گذشته</li>
+                                <li>درمان‌های متمرکز بر تروما مانند EMDR یا IFS</li>
+                                <li>آموزش مهارت‌های تنظیم هیجان پیشرفته</li>
+                                <li>پرهیز از روابط عمیق تا زمان رسیدن به ثبات هیجانی</li>
+                                <li>ممکن است نیاز به دارودرمانی همراه با روان‌درمانی باشد</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // اضافه کردن تحلیل ابعاد به نتیجه
+            resultText += dimensionAnalysis;
+            
+            // بخش پیشنهادات کلی
+            resultText += `
+                <div class="result-section">
+                    <h3>پیشنهادات تخصصی برای بهبود رابطه</h3>
+                    <p>بر اساس نتایج تست شما، پیشنهادات زیر می‌توانند به بهبود کیفیت روابط عاطفی شما کمک کنند:</p>
+                    
+                    <div class="recommendation">
+                        <p><strong>1. افزایش خودآگاهی رابطه‌ای:</strong> مطالعه درباره نظریه دلبستگی و الگوهای رابطه‌ای می‌تواند بینش ارزشمندی ایجاد کند. کتاب‌های زیر پیشنهاد می‌شوند:</p>
+                        <ul>
+                            <li>"تئوری دلبستگی و رواندرمانی" اثر دیوید والین</li>
+                            <li>"عاشق شدنت را متوقف کن" اثر هریت لرنر</li>
+                            <li>"هفت اصل برای ازدواج موفق" اثر جان گاتمن</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="recommendation">
+                        <p><strong>2. توسعه مهارت‌های ارتباطی:</strong> آموزش مهارت‌هایی مانند:</p>
+                        <ul>
+                            <li>گوش دادن فعال (شنیدن با تمام توجه بدون قضاوت)</li>
+                            <li>بیان نیازها به شیوه سالم با استفاده از پیام‌های "من"</li>
+                            <li>حل تعارض سازنده با تکنیک‌های مبتنی بر پژوهش</li>
+                            <li>تشخیص و بیان هیجانات به شیوه بالغانه</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="recommendation">
+                        <p><strong>3. کار بر روی تنظیم هیجان:</strong> تمرین تکنیک‌های زیر می‌تواند کمک‌کننده باشد:</p>
+                        <ul>
+                            <li>ذهن‌آگاهی (Mindfulness) برای حضور در لحظه</li>
+                            <li>بازسازی شناختی برای تغییر الگوهای فکری ناسالم</li>
+                            <li>تحمل پریشانی برای مدیریت بهتر موقعیت‌های چالش‌برانگیز</li>
+                            <li>تکنیک‌های تنفسی برای تنظیم سیستم عصبی</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="recommendation">
+                        <p><strong>4. مشاوره تخصصی:</strong> بسته به امتیاز شما، این گزینه‌ها پیشنهاد می‌شود:</p>
+                        <ul>
+                            <li>مشاوره فردی با تمرکز بر الگوهای دلبستگی</li>
+                            <li>زوج‌درمانی برای بهبود تعاملات رابطه‌ای</li>
+                            <li>گروه‌درمانی برای تجربه‌آموزی با دیگران</li>
+                            <li>کارگاه‌های آموزشی مهارت‌های رابطه‌ای</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="recommendation">
+                        <p><strong>5. برنامه رشد فردی:</strong> توسعه علایق و مهارت‌های فردی می‌تواند به ایجاد تعادل در رابطه کمک کند:</p>
+                        <ul>
+                            <li>پیگیری علایق و سرگرمی‌های شخصی</li>
+                            <li>توسعه مهارت‌های حرفه‌ای و تحصیلی</li>
+                            <li>فعالیت‌های بدنی منظم برای سلامت جسم و روان</li>
+                            <li>پرورش روابط اجتماعی خارج از رابطه عاطفی</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="result-section">
+                    <h3>گام بعدی: اقدام عملی</h3>
+                    <p>برای تبدیل این دانش به تغییر ماندگار، پیشنهاد می‌کنیم:</p>
+                    <ol>
+                        <li>3 نقطه قوت رابطه‌ای خود را یادداشت کنید</li>
+                        <li>2 حوزه نیازمند بهبود را مشخص کنید</li>
+                        <li>1 اقدام کوچک همین امروز برای بهبود رابطه انجام دهید</li>
+                    </ol>
+                    <p>به یاد داشته باشید که تغییر الگوهای رابطه‌ای نیازمند زمان، صبر و تمرین مداوم است.</p>
+                </div>
+            `;
+            
+            resultContent.innerHTML = resultText;
+            resultContainer.style.display = 'block';
+            
+            // اسکرول به بخش نتیجه
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ریست کردن تست
+        function resetTest() {
+            answers = [];
+            totalScore = 0;
+            for (const dim in dimensionScores) {
+                dimensionScores[dim] = 0;
+                dimensionCounts[dim] = 0;
+            }
+            document.getElementById('resultContainer').style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'block';
+            displayQuestions();
+        }
+
+        // به‌روزرسانی نوار پیشرفت
+        function updateProgress() {
+            const answeredCount = answers.filter(a => a !== undefined).length;
+            const progress = (answeredCount / questions.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+
+        // شروع تست
+        displayQuestions();
+    </script>
+</body>
+</html>
